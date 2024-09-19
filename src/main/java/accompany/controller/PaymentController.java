@@ -24,4 +24,23 @@ public class PaymentController {
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }
+
+    @GetMapping("/success")
+    public ResponseEntity<?> paymentSuccess(
+            @RequestParam String paymentKey,
+            @RequestParam String orderId,
+            @RequestParam String amount) {
+        try {
+            PaymentRequest paymentRequest = new PaymentRequest();
+            paymentRequest.setPaymentKey(paymentKey);
+            paymentRequest.setOrderId(orderId);
+            paymentRequest.setAmount(amount);
+
+            Map<String, Object> paymentResponse = paymentsService.confirmPayment(paymentRequest);
+
+            return ResponseEntity.ok(paymentResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Payment confirmation failed: " + e.getMessage());
+        }
+    }
 }
