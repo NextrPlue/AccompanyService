@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://js.tosspayments.com/v1"></script>
+</head>
+<body>
+<section>
+    <span>총 주문금액</span>
+    <span>35,000 원</span>
+    <button id="payment-button">35,000원 결제하기</button>
+</section>
+<script>
+    var clientKey = "test_ck_BX7zk2yd8y2A1JMej9LA3x9POLqK"
+    var tossPayments = TossPayments(clientKey)
+    var button = document.getElementById('payment-button')
+    button.addEventListener('click', function () {
+        tossPayments.requestPayment('카드', {
+            amount: 35000,
+            orderId: '000001',
+            orderName: '동행 비용 결제',
+            customerName: '홍길동',
+            successUrl: 'http://localhost:8080/api/payments/toss/success',
+            failUrl: 'http://localhost:8080/api/payments/toss/fail',
+        })
+    })
+</script>
+</body>
+</html>
